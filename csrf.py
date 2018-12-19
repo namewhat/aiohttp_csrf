@@ -67,6 +67,9 @@ class CSRFProtect(dict):
         s = Serializer(secret_key, expires_in=expires_in)
         return s.dumps({'name': self._name})
 
+    async def _error_response(self, msg):
+        return web.json_response({'status': -1, 'msg': msg})
+
     def _csrf_validate(self, token):
         if token is None:
             raise ValidationError('The CSRF token is missing.')
