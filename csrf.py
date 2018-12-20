@@ -65,7 +65,7 @@ class CSRFProtect(dict):
         expires_in = self._app.config.get('CSRF_TOKEN_EXPIRES') or self._app.config[
             'CSRF_TIME_LIMIT']
         s = Serializer(secret_key, expires_in=expires_in)
-        return s.dumps({'name': self._name})
+        return s.dumps({'name': self._name}).decode()
 
     async def _error_response(self, msg):
         return web.json_response({'status': -1, 'msg': msg})
